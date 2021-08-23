@@ -1,25 +1,39 @@
 import React, { Component } from 'react'
-import Modal from 'react-bootstrap/Modal'
-import { Button } from 'react-bootstrap'
-//show={show} onHide={handleClose}
-export class UpdateForm extends Component {
+import { Modal, Button,Form } from 'react-bootstrap';
+
+
+class UpdateForm extends Component {
     render() {
+        console.log(this.props.name);
         return (
             <div>
-                
-                <Modal >
+                <Modal show={this.props.handleShow} onHide={this.props.handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Modal heading</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                    <Modal.Body>
+                        <Form onSubmit={this.props.updatedData}  >
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Label>name</Form.Label>
+                            <Form.Control type="text"  defaultValue={this.props.name} name='name' />
+                          
+                        </Form.Group>
 
-                    {/* <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button> */}
-
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>img</Form.Label>
+                            <Form.Control type="text"  defaultValue={this.props.img_path} name='img_path'/>
+                        </Form.Group>
+                       
+                        <Button variant="primary" type="submit" onClick={this.props.handelclose}>
+                            Submit
+                        </Button>
+                    </Form></Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.props.handelclose}>
+                            Close
+                        </Button>
+                       
+                    </Modal.Footer>
                 </Modal>
             </div>
         )

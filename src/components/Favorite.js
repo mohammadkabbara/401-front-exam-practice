@@ -11,22 +11,32 @@ export class Favorite extends Component {
         this.state = {
             arrFav: [],
             show: false,
+            email: this.props.auth0.user.email,
+
         }
     }
+
     ////////////////
 
     componentDidMount = async (req, res) => {
-        const { user } = this.props.auth0;
-        await axios.get(`http://localhost:3030/favorite?email=${user.email}`).then(response => {
+       // console.log(this.state.email)
+       
+        await axios.get(`http://localhost:3030/favorite?email=${this.state.email}`).then(response => {
             this.setState({
                 arrFav: response.data
             })
+            
+
         })
-    }
+       
+
+    };
 ////////////////////
     deleteFromFavorite = async (index) => {
+ 
+    const { user } = this.props.auth0;
 
-        await axios.delete(`http://localhost:3030/favorite/${index}`).then(response => {
+        await axios.delete(`http://localhost:3030/favorite/${index}?email=${user.email}`).then(response => {
             this.setState({
                 arrFav: response.data
             })
@@ -46,6 +56,26 @@ export class Favorite extends Component {
         })
     }
     /////////////////////////////////
+    updatedData = async (e) => {
+        
+
+        e.preventDefault()
+        let updateopj = {
+          email: this.props.auth0.email,
+          name: e.target.name.value,
+          img_path: e.target.img_path.value,
+    
+        }
+        
+        // http://localhost:3008/update/index
+    
+        let response = await axios.put(`http://localhost:3030/favorite/${this.state.index}?email=${this.props.auth0.email}`, updateopj
+        )
+        await this.setState({
+            arrFav: response.data
+        })
+    
+      }
     render() {
 
         return (
@@ -67,7 +97,8 @@ export class Favorite extends Component {
                     })
                 }
                 {
-                    <UpdateForm />
+                    <UpdateForm 
+                    handleShow={this.handleShow}  handleClose={this.handleClose}  img_path={this.state.img_path} name={this.state.name} show={this.state.show} updatedData={this.updatedData} index={this.state.index} />
 
 
                 }

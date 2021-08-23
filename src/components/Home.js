@@ -27,11 +27,11 @@ export class Home extends Component {
     ////////////
 
      addToFavorite(item) {
-        // const { user } = this.props.auth0;
+        const { user } = this.props.auth0;
         const reqbody ={
             name:item.strDrink,
             img_path:item.strDrinkThumb,
-            
+            email:user.email
         }
         axios.post(`http://localhost:3030/favorite`,reqbody)
         console.log(reqbody)
