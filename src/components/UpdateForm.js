@@ -7,12 +7,12 @@ class UpdateForm extends Component {
         console.log(this.props.name);
         return (
             <div>
-                <Modal show={this.props.handleShow} onHide={this.props.handleClose}>
+                <Modal show={this.props.show} onHide={this.props.handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Modal heading</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form onSubmit={this.props.updatedData}  >
+                        <Form onSubmit = {(e) => this.props.updatedData(e)}  >
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>name</Form.Label>
                             <Form.Control type="text"  defaultValue={this.props.name} name='name' />
